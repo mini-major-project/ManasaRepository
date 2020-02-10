@@ -73,18 +73,14 @@ public class UserHomePage extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		out.println("<html><head></head><body>");
-		out.println("<h1>Children: Vaccination & Nutritions</h1>");
-		//out.println("<h3>" + childNames + "</h3>");
-
-		for (int i = 0; i < noOfChildren; i++) {
-			out.println("<form action='ChildDetails.jsp' method='get'>");
-			//out.println("<h2>" + childNames.get(i) + "</h2>");
-			out.println("<input type='submit' name='childName' value='" + childNames.get(i) + "'> ");
-			out.println("</form>");
+		
+		if(childNames.size()>0) {
+			RequestDispatcher rd = request.getRequestDispatcher("UserHomePage.jsp");
+			rd.include(request, response);
 		}
-
+		else {
+			
+		}
 	}
 
 	/**
