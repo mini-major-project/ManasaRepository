@@ -1,0 +1,35 @@
+https://www.python.org/downloads/
+
+if not installed properly--> add and remove --> python-> modify->
+env variables in system and user variables
+
+In cmd prompt-->
+python -m pip install --upgrade pip
+python -m pip install jupyter
+
+cmd-> jupyter notebook
+if any problem--> place this code in C:\Users\mgottam\AppData\Local\Programs\Python\Python38\Lib\site-packages\tornado\platform--> asynico.py
+import sys
+if sys.platform == 'win32':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+cmd-> jupyter notebook
+google-> new-> python3
+
+
+
+
+
+chatbot-
+
+download
+run cmd from that folder
+python setup.py install
+pip install mathparse
+pip install spacy
+
+
+
+pip install ChatterBot==1.0.4
+python -m chatterbot --version
+time.perf_counter() in C:\Users\mgottam\AppData\Local\Programs\Python\Python38\Lib\site-packages\sqlalchemy\util compact.py in line 264
