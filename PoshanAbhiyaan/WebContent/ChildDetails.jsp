@@ -15,8 +15,6 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <title>Document</title>
 <style>
-
-
 ul {
 	list-style-type: none;
 	overflow: hidden;
@@ -91,6 +89,9 @@ body {
 .container {
 	padding: 16px;
 }
+li.last {
+	float: right !important;
+}
 </style>
 
 </head>
@@ -101,7 +102,7 @@ body {
 		<li><a href="pregnancy.html">About Pregnancy</a></li>
 		<li><a href="child.html">About Child Care</a></li>
 		<li><a href="profile.jsp"> My Profile</a></li>
-
+		<li class="last"><a href="UserLogout">Logout</a></li>
 	</ul>
 	<h2>
 		Vaccination Information of
@@ -125,14 +126,14 @@ body {
 			int childId = 0;
 			for (int i = 0; i < childNames.size(); i++) {
 				String name = childNames.get(i);
-				System.out.print(i+" : "+name+" : "+childName);
+				System.out.print(i + " : " + name + " : " + childName);
 				if (name.contains(childName) || childName.contains(name)) {
-					System.out.println("CORRECT: "+i+" : "+name+" : "+childName);
+					System.out.println("CORRECT: " + i + " : " + name + " : " + childName);
 					childId = childIds.get(i);
 				}
 			}
-			
-			System.out.println("Child Id: "+childId);
+
+			System.out.println("Child Id: " + childId);
 
 			ArrayList<String> dates = new ArrayList<>();
 			ArrayList<String> vaccinations = new ArrayList<>();

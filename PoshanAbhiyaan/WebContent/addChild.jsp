@@ -81,6 +81,9 @@ body {
 * {
 	box-sizing: border-box;
 }
+
+li.last {
+	float: right !important;
 }
 </style>
 <script language="Javascript">
@@ -107,6 +110,7 @@ body {
 		<li><a href="pregnancy.html">About Pregnancy</a></li>
 		<li><a href="child.html">About Child Care</a></li>
 		<li><a href="profile.jsp"> My Profile</a></li>
+		<li class="last"><a href="UserLogout">Logout</a></li>
 	</ul>
 	<center>
 		<h3>Want to add CHILD? Fill in the details.</h3>

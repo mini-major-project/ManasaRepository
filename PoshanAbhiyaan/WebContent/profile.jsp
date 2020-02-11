@@ -11,7 +11,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<title>Document</title>
+<title>Poshan Abhiyaan</title>
 <style>
 ul {
 	list-style-type: none;
@@ -94,16 +94,19 @@ body {
 .column {
 	flex: 50%;
 }
+li.last {
+	float: right !important;
+}
 </style>
 </head>
 <body>
 	<ul>
 		<li><a href="InfoHomePage.html">Home</a></li>
 		<li><a href="UserHomePage.jsp">Track Your Records</a></li>
-		<li><a href="pregnacy.html">About Pregnancy</a></li>
+		<li><a href="pregnancy.html">About Pregnancy</a></li>
 		<li><a href="child.html">About Child Care</a></li>
 		<li><a href="profile.jsp"> My Profile</a></li>
-
+		<li class="last"><a href="UserLogout">Logout</a></li>
 	</ul>
 	<%
 		String userMail = (String) session.getAttribute("userMail");
