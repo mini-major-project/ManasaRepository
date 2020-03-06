@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -69,7 +70,29 @@ public class UserHomePage extends HttpServlet {
 			session.setAttribute("childIds", childIds);
 			session.setAttribute("noOfChildren", noOfChildren);
 			session.setAttribute("userId", userId);
-
+			
+			int noOfTimesPreg=0;
+			ArrayList<String> startDates=new ArrayList<>();
+			ArrayList<String> lastDates=new ArrayList<>();
+			
+			PreparedStatement pstmt2 = con.prepareStatement("select * from pregnantPerson where userid=?");
+			pstmt2.setInt(1, userId);
+			ResultSet rs2 = pstmt2.executeQuery();
+			while (rs2.next()) {
+				session.setAttribute("pregId", rs2.getInt("ppid"));
+				session.setAttribute("pregName",session.getAttribute("userName"));
+				startDates.add(rs2.getString("startDateOfPreg"));
+				lastDates.add(rs2.getString("day261Date"));
+				noOfTimesPreg++;
+			}
+			Collections.sort(startDates);;
+			Collections.sort(lastDates);
+			if(noOfTimesPreg>0) {
+			System.out.println(lastDates+" : "+lastDates.get(lastDates.size()-1));
+			session.setAttribute("startDateOfPreg",startDates.get(startDates.size()-1));
+			session.setAttribute("lastDateOfPreg", lastDates.get(lastDates.size()-1));
+			session.setAttribute("noOfTimesPreg",noOfTimesPreg);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
