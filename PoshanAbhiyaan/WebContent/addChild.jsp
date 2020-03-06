@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
+<title>Poshan Abhiyaan</title>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<title>Document</title>
 <style>
 ul {
 	list-style-type: none;
@@ -107,8 +106,10 @@ li.last {
 	<ul>
 		<li><a href="InfoHomePage.html">Home</a></li>
 		<li><a href="UserHomePage.jsp">Track Your Records</a></li>
-		<li><a href="pregnancy.html">About Pregnancy</a></li>
-		<li><a href="child.html">About Child Care</a></li>
+		<li><a href="women.html">Women</a></li>
+		<li><a href="child.html">Child</a></li>
+		<li><a href="EmergencySearch.html">Emergency</a></li>
+		<li><a href="archive.jsp">Archive</a></li>
 		<li><a href="profile.jsp"> My Profile</a></li>
 		<li class="last"><a href="UserLogout">Logout</a></li>
 	</ul>
@@ -127,7 +128,7 @@ li.last {
 	</center>
 
 <%
-System.out.println("No.of childreb: "+request.getParameter("noofchildren"));
+System.out.println("No.of children: "+request.getParameter("noofchildren"));
 if(request.getParameter("noofchildren")!=null){
 int noOfChildren=Integer.parseInt(request.getParameter("noofchildren"));
     int parent=(Integer)session.getAttribute("userId");

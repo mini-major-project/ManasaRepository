@@ -6,14 +6,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Poshan Abhiyaan</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<title>Document</title>
 <style>
 ul {
 	list-style-type: none;
@@ -92,6 +91,7 @@ body {
 li.last {
 	float: right !important;
 }
+
 </style>
 
 </head>
@@ -99,8 +99,10 @@ li.last {
 	<ul>
 		<li><a href="InfoHomePage.html">Home</a></li>
 		<li><a href="UserHomePage.jsp">Track Your Records</a></li>
-		<li><a href="pregnancy.html">About Pregnancy</a></li>
-		<li><a href="child.html">About Child Care</a></li>
+		<li><a href="women.html">Women</a></li>
+		<li><a href="child.html">Child</a></li>
+		<li><a href="EmergencySearch.html">Emergency</a></li>
+		<li><a href="archive.jsp">Archive</a></li>
 		<li><a href="profile.jsp"> My Profile</a></li>
 		<li class="last"><a href="UserLogout">Logout</a></li>
 	</ul>
@@ -166,7 +168,7 @@ li.last {
 			}
 			System.out.println(vaccinations);
 	%>
-	<table border=1 align="center">
+	<table border=1 align="center"  bordercolor = "black" bgcolor = "#e6ffe6" width = "900" height = "600">
 		<col width="180">
 		<col width="500">
 		<caption align=top>
@@ -179,14 +181,18 @@ li.last {
 			for (int i = 0; i < dates.size(); i++) {
 		%>
 		<tr>
-			<td>
+			<td align="center">
 				<%
 					out.println(dates.get(i));
 				%>
 			</td>
-			<td>
+			<td align="center">
 				<%
-					out.println(vaccinations.get(i));
+				String vaccines[]=vaccinations.get(i).split(",");
+				for(int j=0;j<vaccines.length;j++){
+					out.println(vaccines[j]);%><br/><%
+				}
+					//out.println(vaccinations.get(i));
 				%>
 			</td>
 		</tr>
