@@ -1,5 +1,7 @@
 <%@page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
+<%@page import="java.time.*"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -94,6 +96,7 @@ body {
 .column {
 	flex: 50%;
 }
+
 li.last {
 	float: right !important;
 }
@@ -103,18 +106,27 @@ li.last {
 	<ul>
 		<li><a href="InfoHomePage.html">Home</a></li>
 		<li><a href="UserHomePage.jsp">Track Your Records</a></li>
-		<li><a href="pregnancy.html">About Pregnancy</a></li>
-		<li><a href="child.html">About Child Care</a></li>
+		<li><a href="women.html">Women</a></li>
+		<li><a href="child.html">Child</a></li>
+		<li><a href="EmergencySearch.html">Emergency</a></li>
+		<li><a href="archive.jsp">Archive</a></li>
 		<li><a href="profile.jsp"> My Profile</a></li>
 		<li class="last"><a href="UserLogout">Logout</a></li>
 	</ul>
 	<%
 		String userMail = (String) session.getAttribute("userMail");
 		int userId = (int) session.getAttribute("userId");
+		//String isPreg = (String) session.getAttribute("isPregnant");
+		String pregName = (String) session.getAttribute("pregName");
+		String isNowPreg="false";
+		String lastDatePreg = null;
+		int noOfTimesPreg=0;
 		int noOfChildren = 0;
+		//String isPregnant = "";
 		ArrayList<String> childNames = new ArrayList<>();
 		ArrayList<Integer> childIds = new ArrayList<>();
-
+		ArrayList<String> startDates = new ArrayList<>();
+		ArrayList<String> lastDates = new ArrayList<>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/poshanabhiyaan", "root",
@@ -137,12 +149,57 @@ li.last {
 			session.setAttribute("childIds", childIds);
 			session.setAttribute("noOfChildren", noOfChildren);
 			session.setAttribute("userId", userId);
+
+
+			PreparedStatement pstmt2 = con.prepareStatement("select * from pregnantPerson where userid=?");
+			pstmt2.setInt(1, userId);
+			ResultSet rs2 = pstmt2.executeQuery();
+			while (rs2.next()) {
+				session.setAttribute("pregName", session.getAttribute("userName"));
+				pregName=(String)session.getAttribute("userName");
+				session.setAttribute("startDateOfPreg", rs2.getString("startDateOfPreg"));
+				//isPregnant = "true";
+				startDates.add(rs2.getString("startDateOfPreg"));
+				lastDates.add(rs2.getString("day261Date"));
+				noOfTimesPreg++;
+			}
+			Collections.sort(startDates);
+			Collections.sort(lastDates);
+			if(noOfTimesPreg>0){
+			System.out.println(lastDates + " : " + lastDates.get(lastDates.size() - 1));
+			session.setAttribute("startDateOfPreg", startDates.get(startDates.size() - 1));
+			session.setAttribute("lastDateOfPreg", lastDates.get(lastDates.size() - 1));
+			lastDatePreg = lastDates.get(lastDates.size() - 1);
+			}
+			//session.setAttribute("isPregnant", isPregnant);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//String isNowPreg = "false";
+		long daysBetween = -1;
+		if (lastDatePreg != null) {
+			LocalDate SystemDate = java.time.LocalDate.now();
+			LocalDate date = LocalDate.parse(lastDatePreg);
+			daysBetween = ChronoUnit.DAYS.between(SystemDate, date);
+			if (daysBetween >= 0) {
+				isNowPreg = "true";
+			}
+		}
+		session.setAttribute("isNowPreg",isNowPreg);
+		session.setAttribute("noOfTimesPreg",noOfTimesPreg);
+		session.setAttribute("noOfChildren",noOfChildren);
 	%>
 	<div class="row">
 		<div class="column">
+		
+			<h3>You can add your Child here:</h3>
+			<br/>
+			<form action="addChild.jsp" method='get'>
+				<input type="submit"
+					style="margin-left: 100px; color: blanchedalmond; font-size: large; height: 100px; width: 250px; background-color: #99003d; align-content: center"
+					name='addChild' value="Add Child">
+			</form>
+			<br /> <br />
 			<%
 				if (noOfChildren > 0) {
 			%>
@@ -152,31 +209,26 @@ li.last {
 				for (int i = 0; i < noOfChildren; i++) {
 			%>
 			<br />
-			<br />
 			<form action='ChildDetails.jsp' method='get'
 				style='margin-left: 100px;'>
 				<%
 					out.print(
-								"<input type='submit' style=\"color: blanchedalmond; font-size: large; height: 100px; width: 250px; background-color: #0099cc; align-content: center\" name='childName' value='"
+								"<input type='submit' style=\"color: blanchedalmond; font-size: large; height: 100px; width: 250px; background-color: #3973ac; align-content: center\" name='childName' value='"
 										+ childNames.get(i) + "'>");
 				%>
 			</form>
+			<br/>
 
 			<%
 				}
 			%>
-			<br />
-			<br />
-			<h3>You can add your Child here:</h3>
-			<form action="addChild.jsp" method='get'>
-				<input type="submit"
-					style="margin-left: 100px; color: blanchedalmond; font-size: large; height: 100px; width: 250px; background-color: #99003d; align-content: center"
-					name='addChild' value="Add Child">
-			</form>
-			<br />
-			<br />
+			
 		</div>
 		<div class="column">
+
+			<%
+				if (!isNowPreg.equals("true")) {
+			%>
 			<br />
 			<br />
 			<h3>Pregnant? Register here for pregnancy related information:</h3>
@@ -185,6 +237,21 @@ li.last {
 					style="margin-left: 100px; color: blanchedalmond; font-size: large; height: 100px; width: 250px; background-color: #99003d; align-content: center"
 					name='Add Pregancy Details' value="Add Pregancy Details">
 			</form>
+			<%
+				} else{
+			%>
+			<center>
+				<h3>Know About Your Pregnancy Details here:</h3>
+				<br />
+				<form action='PregnantDetails.jsp' method='get'>
+					<input type="submit"
+						style="margin-left: 100px; color: blanchedalmond; font-size: large; height: 100px; width: 250px; background-color: #3973ac; align-content: center"
+						name="pregName" value=" <%out.print(pregName);%> ">
+				</form>
+				<%
+					}
+				%>
+			
 		</div>
 	</div>
 </body>
